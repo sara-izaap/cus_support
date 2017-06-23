@@ -6,13 +6,16 @@
                                         
 
 $config['layout']['default']['template'] = 'layouts/frontend';
-$config['layout']['default']['title']    = 'Order Processing';
+$config['layout']['default']['title']    = 'Customer Support Services';
+$config['layout']['default']['js_dir']    = "assets/js/frontend";
+$config['layout']['default']['css_dir']   = "assets/css/frontend";
+$config['layout']['default']['img_dir']   = "assets/img";
 
 $config['layout']['default']['javascripts'] = array(
-  'jquery',"jquery-ui", 'bootstrap.min', 'bootbox.min', 'function', 'jquery.fixedheadertable.min', 'listing', 'resizable-tables', 'bootstrap-datepicker', 'bootstrap-select', 'ckeditor/ckeditor'  
+  'jquery.min', 'bootstrap.min','chosen.jquery','common'
 );
  
-$config['layout']['default']['stylesheets'] = array('bootstrap', 'bootstrap-responsive', 'zoom');
+$config['layout']['default']['stylesheets'] = array('bootstrap.min', 'style','bootstrap-chosen');
 
 $config['layout']['default']['description'] = '';
 $config['layout']['default']['keywords']    = '';
