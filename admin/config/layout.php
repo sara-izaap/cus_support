@@ -12,10 +12,10 @@ $config['layout']['default']['css_dir']   = "assets/css/admin";
 $config['layout']['default']['img_dir']   = "assets/img";
 
 $config['layout']['default']['javascripts'] = array(
-  'jquery.min',"jquery-migrate.min", 'bootstrap.min', 'jquery.blockui.min', 'jquery.cokie.min', 'jquery.uniform.min', 'jquery.validate.min', 'metronic', 'layout',  
+  'jquery.min', 'bootstrap.min', 'metronic', 'layout', 'function'  
 );
  
-$config['layout']['default']['stylesheets'] = array('bootstrap.min', 'font-awesome.min', 'uniform.default','components','plugins','layout','darkblue','custom','login');
+$config['layout']['default']['stylesheets'] = array('bootstrap.min', 'font-awesome.min','components','layout','darkblue','custom','login');
 
 $config['layout']['default']['description'] = '';
 $config['layout']['default']['keywords']    = '';

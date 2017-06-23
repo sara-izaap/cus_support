@@ -93,7 +93,7 @@ function display_flashmsg($flash){
     }
 
     if($status && $msg){
-        $str = '<div class="Metronic-alerts alert alert-'.$status.' fade in">';
+        $str = '<div id="div_service_message" class="Metronic-alerts alert alert-'.$status.' fade in">';
         $str.= '<button class="close" aria-hidden="true" data-dismiss="alert" type="button"><i class="fa-lg fa fa-warning"></i></button>';
         
         if($status == 'danger')

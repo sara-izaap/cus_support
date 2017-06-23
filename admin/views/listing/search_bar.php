@@ -27,7 +27,3 @@
     </div>
   </div>
 </div>
-
-<div class="col-md-3 button-group text-right">
-  <a href="<?php echo site_url('customer/add');?>" class="btn green ">New Customer <i class="fa fa-plus"></i></a>
-</div>

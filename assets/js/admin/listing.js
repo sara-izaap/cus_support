@@ -3,24 +3,11 @@
 
 		
 		var listing_form_data = {};
-
-		var timesheet_checkbox_data = [];
 		
 		var progress_bar_flag = false;
 		
 		var grids = {};
-		grids.notes_table = {pagination:'notes_pagination', search_option:false,search_bar:false,sidebar:false};		
-		grids.logs_table = {pagination:'logs_pagination', search_option:false,search_bar:false,sidebar:false};
-		
-		if(namespace == "create_sales_order_index"){
-			$("input[name='search_text']").keyup(function() {
-		        var textbox = $(this);
-		        if (textbox.val().length > 2 ) {
-		          $("#simple_search_button").trigger('click');
-		          return false;
-		        }  
-	  		});
-		}	
+			
 		$.fn.zoomgrid = function( options ) { 
 
 			//merge options with the default
@@ -92,15 +79,11 @@
 				$.fn.display_grid(target_url, 'data_table');
 			});
 			
-			/*$("input[name='search_text']").enterKey(function () {
-				$("#simple_search_button").trigger('click');
-				return false;
-			});*/
 			
 			$.fn.get_advance_search_form();
 			
 			$("select[name='per_page_options']").bind('change', function(){
-				$.post(base_url+current_controller+'/set_records_per_page/'+namespace,{per_page:$(this).val()},function(){
+				$.post(base_url+current_controller+'/'+current_method+'/set_records_per_page/'+namespace,{per_page:$(this).val()},function(){
 					$.fn.display_grid(target_url, 'data_table');
 				}, 'json');
 			});
@@ -138,12 +121,7 @@
 						
 		$.fn.display_grid = function( url, data_tbl ) {
 		
-			if(data_tbl == 'notes_table')
-				opts =  grids.notes_table;
-			else if(data_tbl == 'logs_table')
-				opts =  grids.logs_table;
-			else
-				opts = $.fn.zoomgrid.defaults;
+			opts = $.fn.zoomgrid.defaults;
 			
 			progress_bar_flag = true;
 			
@@ -185,7 +163,6 @@
 			{
 				$.post(base_url+'/'+current_controller+'/get_advance_filter_form/'+namespace,{},function(data){
 					$("#popOverBox").html(data.advance_filter_form);
-  				init_checkbox(timesheet_checkbox_data);					
 
 					if(current_controller=='purchase')
 						init_daterangepicker($('.date_range').val());
@@ -221,13 +198,6 @@
 		$.fn.submit_advance_search_form = function(){
 			listing_form_data = {};
 			listing_form_data = $("#advance_search_form").serialize();
-
-			if(current_controller == 'timesheet'){
-				var i = 0;
-				$('.empcheckbox:checked').each(function(){
-			          timesheet_checkbox_data[i++] = $(this).val();
-			    });
-			}
 
 			$.fn.display_grid(base_url+'/'+current_controller+'/'+current_method, 'data_table');
 		};

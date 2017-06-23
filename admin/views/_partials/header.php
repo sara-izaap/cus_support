@@ -37,14 +37,10 @@
           <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
           <img alt="" class="img-circle" src=""/>
           <span class="username username-hide-on-mobile">
-          <?=$profile['first_name'];?> </span>
+          Welcome <?=$profile['first_name'];?> </span>
           <i class="fa fa-angle-down"></i>
           </a>
           <ul class="dropdown-menu dropdown-menu-default">
-            <li>
-              <a href="<?=site_url('profile');?>">
-              <i class="icon-user"></i> My Profile </a>
-            </li>
             <li>
               <a href="<?=site_url('login/logout');?>">
               <i class="icon-key"></i> Log Out </a>
@@ -83,6 +79,14 @@
           <i class="fa fa-user"></i>
           <span class="title">Customer</span>
           <?=($uri=='customer')?"<span class='selected'>":"";?>
+          </a>
+        </li>
+
+        <li class="start <?=($uri=='tickets')?'active':'';?>">
+          <a href="<?=site_url('tickets');?>">
+          <i class="fa fa-ticket"></i>
+          <span class="title">Tickets</span>
+          <?=($uri=='tickets')?"<span class='selected'>":"";?>
           </a>
         </li>
       </ul>

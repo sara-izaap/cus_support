@@ -30,11 +30,29 @@ $config['customer_index'] = array(
 	"base_url"	=> 	'/customer/index/',
 	"per_page"	=>	"20",
 	"fields"	=> array(   
-						'first_name'=>array('name'=>'Name', 'data_type' => 'String', 'sortable' => FALSE, 'default_view'=>1),					
-						'last_name'=>array('name'=>'Last Name', 'data_type' => 'String', 'sortable' => FALSE, 'default_view'=>1),
+						'company_name'=>array('name'=>'Company Name', 'data_type' => 'String', 'sortable' => FALSE, 'default_view'=>1),					
+						'name'=>array('name'=>'Customer Name', 'data_type' => 'String', 'sortable' => FALSE, 'default_view'=>1),
 						'email'=>array('name'=>'Email', 'data_type' => 'string', 'sortable' => FALSE, 'default_view'=>1),
 						'phone'=>array('name'=>'Phone', 'data_type' => 'string', 'sortable' => FALSE, 'default_view'=>1),
 						'status'=>array('name'=>'Status', 'data_type' => 'string', 'sortable' => FALSE, 'default_view'=>1)),
+
+	"default_order"	=> "id",
+	"default_direction" => "DESC"
+);
+
+$config['tickets_index'] = array(
+	"view"		=> 	'listing/listing',
+	"init_scripts" => 'listing/init_scripts',
+	"advance_search_view" => 'frontend/tickets/filter',
+	"base_url"	=> 	'/tickets/index/',
+	"per_page"	=>	"20",
+	"fields"	=> array(   
+						'company_name'=>array('name'=>'Company Name', 'data_type' => 'String', 'sortable' => FALSE, 'default_view'=>1),					
+						//'customer_name'=>array('name'=>'Customer Name', 'data_type' => 'String', 'sortable' => FALSE, 'default_view'=>1),
+						'support_type'=>array('name'=>'Type', 'data_type' => 'string', 'sortable' => FALSE, 'default_view'=>1),
+						'description'=>array('name'=>'Description', 'data_type' => 'string', 'sortable' => FALSE, 'default_view'=>1),
+						'status'=>array('name'=>'Status', 'data_type' => 'string', 'sortable' => FALSE, 'default_view'=>1),
+						'created_date'=>array('name'=>'Submited Date', 'data_type' => 'datetime', 'sortable' => FALSE, 'default_view'=>1)),
 
 	"default_order"	=> "id",
 	"default_direction" => "DESC"

@@ -13,8 +13,7 @@ class Customer_model extends App_model
   function listing()
   {  
     
-    $this->_fields = "c.*,IF(c.status='Y','Active','Inactive') as status";
-    $this->db->from('customer c');
+    $this->_fields = "*,IF(status='Y','Active','Inactive') as status";
     $this->db->group_by('id');
 
     foreach ($this->criteria as $key => $value)
@@ -23,10 +22,10 @@ class Customer_model extends App_model
         continue;
       switch ($key)
       {
-        case 'first_name':
+        case 'company_name':
           $this->db->like($key, $value);
         break;
-        case 'last_name':
+        case 'name':
           $this->db->like($key, $value);
         break;
         case 'email':

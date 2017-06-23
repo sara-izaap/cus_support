@@ -2,61 +2,52 @@
 
 require_once(COREPATH."controllers/Admin_controller.php");
 
-class Customer extends Admin_Controller
+class Tickets extends Admin_Controller
 {
 
-	protected $_customer_validation_rules = array (
-                       array('field' => 'company_name', 'label' => 'Company Name', 'rules' => 'trim|required'), 
-			           array('field' => 'name', 'label' => 'First Name', 'rules' => 'trim|required'),
-			           array('field' => 'email', 'label' => 'Email', 'rules' => 'trim|required|valid_email'),
-			           array('field' => 'phone', 'label' => 'Phone', 'rules' => 'trim|required'),
-			           array('field' => 'address', 'label' => 'Address', 'rules' => 'trim|required'),
-			           array('field' => 'status', 'label' => 'Enabled', 'rules' => 'trim|required')
-                 );
+    function __construct()
+    {
+        parent::__construct();
+        
+        if(!is_logged_in())
+          redirect('login');
 
-	function __construct()
-  {
-    parent::__construct();
-    
-    if(!is_logged_in())
-      redirect('login');
+        $this->load->model('tickets_model');
+    }
 
-    $this->load->model('customer_model');
-  }
+      
+    public function index()
+    {
 
-  
-  public function index()
-  {
+      	$this->layout->add_javascripts(array('listing'));
 
-  	$this->layout->add_javascripts(array('listing'));
+        $this->load->library('listing');
+        $this->simple_search_fields = array('id'=>'Ticked id#','company_name' => 'Company Name','support_type'=>'Support Type','name'=>'Name','email'=>'Email','phone'=>'Phone','address'=>'Address');
+        $this->_narrow_search_conditions = array("start_date");
 
-    $this->load->library('listing');
-    $this->simple_search_fields = array('company_name' => 'Company Name','name'=>'Name','email'=>'Email','phone'=>'Phone','address'=>'Address');
-    $this->_narrow_search_conditions = array("start_date");
+        $str = '<a href="'.site_url('tickets/view/{id}').'" class="btn btn btn-padding yellow table-action"><i class="fa fa-edit edit"></i></a><a href="javascript:void(0);" data-original-title="Remove" data-toggle="tooltip" data-placement="top" class="table-action btn-padding btn red" onclick="delete_record(\'tickets/delete/{id}\',this);"><i class="fa fa-trash-o trash"></i></a>';
+        
+        $this->listing->initialize(array('listing_action' => $str));
 
-    $str = '<a href="'.site_url('customer/add/{id}').'" class="btn btn btn-padding yellow table-action"><i class="fa fa-edit edit"></i></a><a href="javascript:void(0);" data-original-title="Remove" data-toggle="tooltip" data-placement="top" class="table-action btn-padding btn red" onclick="delete_record(\'customer/delete/{id}\',this);"><i class="fa fa-trash-o trash"></i></a>';
-    
-    $this->listing->initialize(array('listing_action' => $str));
-
-    $listing = $this->listing->get_listings('customer_model', 'listing');
+        $listing = $this->listing->get_listings('tickets_model', 'listing');
 
 
-    if($this->input->is_ajax_request())
-      $this->_ajax_output(array('listing' => $listing), TRUE);
+        if($this->input->is_ajax_request())
+          $this->_ajax_output(array('listing' => $listing), TRUE);
 
-    $this->data['bulk_actions'] = array('' => 'select', 'delete' => 'Delete');
-    $this->data['simple_search_fields'] = $this->simple_search_fields;
-    $this->data['search_conditions'] = $this->session->userdata($this->namespace.'_search_conditions');
-    $this->data['per_page'] = $this->listing->_get_per_page();
-    $this->data['per_page_options'] = array_combine($this->listing->_get_per_page_options(), $this->listing->_get_per_page_options());
-    $this->data['search_bar'] = $this->load->view('listing/search_bar', $this->data, TRUE);
-    $this->data['listing'] = $listing;
-    $this->data['grid'] = $this->load->view('listing/view', $this->data, TRUE);
+        $this->data['bulk_actions'] = array('' => 'select', 'delete' => 'Delete');
+        $this->data['simple_search_fields'] = $this->simple_search_fields;
+        $this->data['search_conditions'] = $this->session->userdata($this->namespace.'_search_conditions');
+        $this->data['per_page'] = $this->listing->_get_per_page();
+        $this->data['per_page_options'] = array_combine($this->listing->_get_per_page_options(), $this->listing->_get_per_page_options());
+        $this->data['search_bar'] = $this->load->view('listing/search_bar', $this->data, TRUE);
+        $this->data['listing'] = $listing;
+        $this->data['grid'] = $this->load->view('listing/view', $this->data, TRUE);
 
-  	$this->layout->view('/frontend/customer/index');
-  }
+      	$this->layout->view('/frontend/tickets/index');
+    }
 
-  function add($edit_id =''){
+    function add($edit_id =''){
 
        try
         {
@@ -130,36 +121,18 @@ class Customer extends Admin_Controller
         $this->data['editdata']  = $edit_data;
 
         $this->layout->view('frontend/customer/add');
-   }
-
-    function check_email($mail,$id)
-    {
-        $where = array();
-     
-        if($id)
-            $where['id !='] = $id;
-
-        $where['email'] = $mail;
-
-        $result = $this->customer_model->get_where( $where)->num_rows();
-     
-        if ($result) {
-            $this->form_validation->set_message('check_email', 'Given email already exists!');
-            return FALSE;
-        }
-        return TRUE;
     }
+
 
     function delete($del_id)
     {
-        $access_data = $this->customer_model->get_where(array("id"=>$del_id),'id')->row_array();
+        $access_data = $this->tickets_model->get_where(array("id"=>$del_id),'id')->row_array();
        
         $output=array();
 
         if(count($access_data) > 0){
 
-            $this->customer_model->delete(array("id"=>$del_id));
-            $this->customer_model->delete(array("customer_id"=>$access_data['id']),'tickets');
+            $this->tickets_model->delete(array("id"=>$del_id));
 
             $output['message'] ="Record deleted successfuly.";
             $output['status']  = "success";

@@ -20,13 +20,9 @@ class Admin_Controller extends App_Controller
     public $load_js                    =    array();
     public $ins_data                   =    array();
     
-    protected $_login_validation_rules =    array (
-                                                    array('field' => 'email', 'label' => 'Email', 'rules' => 'trim|required|xss_clean'),
-                                                    array('field' => 'password', 'label' => 'Password', 'rules' => 'trim|required|xss_clean|min_length[4]|max_length[20]|alpha_dash')
-                                                  );
-   protected $useradd_validation_rules =    array();  
-   protected $role_validation_rules    =    array();
-   public $init_scripts = array();
+    protected $useradd_validation_rules =    array();  
+    protected $role_validation_rules    =    array();
+    public $init_scripts = array();
     
     public function __construct()
     {
