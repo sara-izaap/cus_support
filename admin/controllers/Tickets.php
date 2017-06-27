@@ -47,80 +47,42 @@ class Tickets extends Admin_Controller
       	$this->layout->view('/frontend/tickets/index');
     }
 
-    function add($edit_id =''){
+    public function view($edit_id = 0){
 
-       try
+        try
         {
-            if($this->input->post('edit_id'))            
+             if($this->input->post('edit_id'))            
                 $edit_id = $this->input->post('edit_id');
 
-            $this->form_validation->set_rules('company_name','Company Name','trim|required');
-            $this->form_validation->set_rules('name','Name','trim|required');
-            $this->form_validation->set_rules('email','Email Name','trim|required|valid_email|callback_check_email['.$edit_id.']');
-            $this->form_validation->set_rules('phone','phone','trim|required');
-            $this->form_validation->set_rules('address','Address','trim|required');
-            $this->form_validation->set_rules('enabled','Enabled','trim|required');
-            
+            $this->form_validation->set_rules('status','Status','trim|required');
+           
+            $this->form_validation->set_error_delimiters('', '');
 
-            $this->form_validation->set_error_delimiters('<span class="help-block">', '</span>');
-                
             if ($this->form_validation->run())
             {
-                $ins_data = array();
-                $ins_data['company_name'] = $this->input->post('company_name');
-                $ins_data['name']         = $this->input->post('name');
-                $ins_data['email']        = $this->input->post('email');
-                $ins_data['phone']        = $this->input->post('phone');
-                $ins_data['address']      = $this->input->post('address');
-                $ins_data['status']       = $this->input->post('enabled');
+                $ins_data= array();
+                $ins_data['status']      = $this->input->post('status');
                
 
-                if($edit_id)
-                {
-                    $ins_data['updated_date'] = date('Y-m-d H:i:s'); 
-                    $this->customer_model->update(array("id" => $edit_id),$ins_data);
+                $this->tickets_model->update(array('id'=>$edit_id), $ins_data);
 
-                    $msg = 'Customer updated successfully';
-                }
-                else
-                {    
-                    $ins_data['created_date'] = date('Y-m-d H:i:s'); 
-                    $this->customer_model->insert($ins_data);
+                $this->session->set_flashdata('success_msg','Status updated successfully',TRUE);
 
-                    $msg = 'Customer added successfully';
-                }
-
-                $this->session->set_flashdata('success_msg',$msg,TRUE);
-
-                redirect('customer');
-            }    
-            else
-            {            
-                $edit_data = array();
-                $edit_data['id']            = '';
-                $edit_data['company_name']  = '';
-                $edit_data['name']          = '';
-                $edit_data['email']         = '';
-                $edit_data['phone']         = '';
-                $edit_data['address']       = '';
-                $edit_data['status']        = 'Y';                    
-
+                redirect('tickets');
+                
             }
-
-        }
+            
+        }    
         catch (Exception $e)
         {
-            $this->data['status']   = 'error';
-            $this->data['message']  = $e->getMessage();
-                
+            $output['status']   = 'error';
+            $output['message']  = $e->getMessage();                
         }
 
-        if($edit_id)
-            $edit_data =$this->customer_model->get_where(array("id" => $edit_id))->row_array();
+        $this->data['editdata'] = $this->tickets_model->get_edit_record($edit_id);
 
-        $this->data['editdata']  = $edit_data;
+        $this->layout->view('frontend/tickets/view');   
 
-        $this->layout->view('frontend/customer/add');
     }
 
 

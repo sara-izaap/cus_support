@@ -47,8 +47,8 @@ $config['tickets_index'] = array(
 	"base_url"	=> 	'/tickets/index/',
 	"per_page"	=>	"20",
 	"fields"	=> array(   
+						'id'=>array('name'=>'Ticket id#', 'data_type' => 'String', 'sortable' => FALSE, 'default_view'=>1),					
 						'company_name'=>array('name'=>'Company Name', 'data_type' => 'String', 'sortable' => FALSE, 'default_view'=>1),					
-						//'customer_name'=>array('name'=>'Customer Name', 'data_type' => 'String', 'sortable' => FALSE, 'default_view'=>1),
 						'support_type'=>array('name'=>'Type', 'data_type' => 'string', 'sortable' => FALSE, 'default_view'=>1),
 						'description'=>array('name'=>'Description', 'data_type' => 'string', 'sortable' => FALSE, 'default_view'=>1),
 						'status'=>array('name'=>'Status', 'data_type' => 'string', 'sortable' => FALSE, 'default_view'=>1),

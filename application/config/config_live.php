@@ -18,10 +18,12 @@ $root = (empty($_SERVER['HTTPS'])?'http://':'https://');
 
 $host = $_SERVER['HTTP_HOST'];
 if($_SERVER['HTTP_HOST']=='localhost')
- $host = 'localhost/cus_support/';
+ $host = 'localhost/cust_support/';
 
 
 $config['base_url'] = $root.$host;
+
+$config['base_path'] = $root.$host;
  
 $config['permitted_uri_chars'] = 'a-zA-Z 0-9~%.:_\-@&,()+=';
 

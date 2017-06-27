@@ -25,7 +25,7 @@ class Tickets_model extends App_model
       switch ($key)
       {
         case 'id':
-          $this->db->like('tickets.id', $value);
+          $this->db->where('tickets.id', $value);
         break;
         case 'company_name':
           $this->db->like('c.company_name', $value);
@@ -48,6 +48,20 @@ class Tickets_model extends App_model
       }
     }
     return parent::listing();
+  }
+
+  function get_edit_record($ticket_id){
+
+    $this->db->select("t.*,c.company_name,c.name as customer_name,c.email,c.phone,c.address,s.name as support_type");
+    $this->db->from('tickets t');
+    $this->db->join('customer c','c.id=t.customer_id');
+    $this->db->join('support_types s','s.id=t.support_type');
+    $this->db->where('t.id', $ticket_id);
+    $this->db->group_by('t.id');
+
+    $result = $this->db->get()->row_array();
+
+    return $result;
   }
 
 

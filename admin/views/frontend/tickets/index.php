@@ -35,3 +35,5 @@
 			<!-- END PAGE CONTENT -->
 		</div>
 	</div>
+
+	<div class="modal fade" id="TicketEdit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"> </div>
