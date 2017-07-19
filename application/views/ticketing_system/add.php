@@ -46,7 +46,9 @@
 	         </div>  
         </div>
 
-	    <div id="new_user_info" style="<?php echo ((isset($_POST['check_cus_state']) && $_POST['check_cus_state'] == 'NC') || !isset($_POST))?'display:block;':'display:none;'; ?>">	
+        <?php $style = 'display:block;';  if((isset($_POST['check_cus_state']) && $_POST['check_cus_state'] != 'NC')) { $style = 'display:none;'; } ?>
+	    
+	    <div id="new_user_info" style="<?php echo $style;?>">	
 			<div class="form-group">
 				<label for="name" class="col-md-3 control-label">Company Name</label>
 				<div class="col-md-7">

@@ -109,6 +109,62 @@ class Tickets extends Admin_Controller
             
     }
 
+    function export(){
+
+        try
+        {
+            $filename = 'Tickets.xls';
+
+            //header('Content-type: application/vnd.ms-excel');
+            //header('Content-Disposition: attachment; filename='.$filename);
+
+            $result = $this->tickets_model->get_report();
+
+            $str = '<table><tr>';
+
+            $columns = array('Ticket id#','Created Date','Company Name','Customer_name','Email','Phone','Address','Support Type','Ticket status','Description');
+
+
+            foreach($columns as $key) {
+                $key = ucwords($key);
+                $str .= '<th>'.$key.'</th>';
+            }
+
+            $str .= '</tr>';
+
+            print_r($result);exit;
+
+            foreach($result as $ke => $res)
+            {
+                 $str .= '<tr>';
+                 $str .= '<td>'.$res['id'].'</td>';
+                 $str .= '<td>'.$res['created_date'].'</td>';
+                 $str .= '<td>'.$res['company_name'].'</td>';
+                 $str .= '<td>'.$res['customer_name'].'</td>';
+                 $str .= '<td>'.$res['email'].'</td>';
+                 $str .= '<td>'.$res['phone'].'</td>';
+                 $str .= '<td>'.$res['address'].'</td>';
+                 $str .= '<td>'.$res['support_type'].'</td>';
+                 $str .= '<td>'.$res['status'].'</td>';
+                 $str .= '<td>'.$res['description'].'</td>';                   
+
+                $str .= '</tr>';
+            }
+
+            $str .= '</table>';
+
+           
+        }
+        catch (Exception $e)
+        {
+            $status   = 'error';
+            $message  = $e->getMessage();                
+        }
+
+        echo $str;
+        exit();    
+    }
+
   
 }
 ?>
